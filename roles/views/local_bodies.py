@@ -44,16 +44,16 @@ def upload_event(request):
         #return render(request, 'registration/signup_form.html')
     #else:
         form = EventForm(request.POST or None, request.FILES or None)
-        if form.is_valid():
-            event = form.save(commit=False)
-            event.user = request.user
-            event.save()
-            send_event_message()
-            return render(request, 'roles/local_bodies/local_bodies_home.html', {'event': event})
+        # if form.is_valid():
+        event = form.save(commit=False)
+        event.user = request.user
+        event.save()
+        send_event_message()
+        return render(request, 'roles/local_bodies/local_bodies_home.html', {'event': event})
         context = {
-            "form": form,
+        "form": form,
         }
-        return render(request, 'roles/local_bodies/upload_event.html', context)
+        # return render(request, 'roles/local_bodies/upload_event.html', context)
 
 '''
             event.poster = request.FILES['poster']

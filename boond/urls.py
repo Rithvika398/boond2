@@ -14,4 +14,8 @@ urlpatterns = [
     path('accounts/signup/bloodBank/', blood_banks.BloodBankSignUpView.as_view(), name='blood_bank_signup'),
     path('accounts/signup/localBody/', local_bodies.LocalBodySignUpView.as_view(), name='local_bodies_signup'),
     path('viewEvents/', local_bodies.view_event, name='view_events'),
+    path('about/', all_roles.about, name='about'),
+    path('contact/', all_roles.contact, name='contact'),
+    path('maps/', all_roles.maps, name='maps'),
+
 ]

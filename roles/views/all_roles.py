@@ -15,3 +15,5 @@ def about(request):
 def contact(request):
     return render(request, 'roles/contact.html')
 
+def maps(request):
+    return render(request, 'roles/maps.html')

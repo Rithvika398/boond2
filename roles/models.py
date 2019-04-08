@@ -1,6 +1,12 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 import datetime
+#from django.contrib.gis.db import models
+#from django.contrib.gis.geos import Point
+#from location_field.models.plain import PlainLocationField
+
+
+
 
 BLOOD_TYPE_CHOICES = (
     ('A+', 'A+'),
@@ -29,7 +35,7 @@ class User(AbstractUser):
 class Donor(models.Model):
     first_name = models.CharField(max_length=40, default='')
     last_name = models.CharField(max_length=40, default='')
-    location = models.CharField(max_length=40, default='')
+    location = models.CharField(max_length=255)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
@@ -39,7 +45,7 @@ class Donor(models.Model):
 class Recipient(models.Model):
     first_name = models.CharField(max_length=40, default='')
     last_name = models.CharField(max_length=40, default='')
-    location = models.CharField(max_length=40, default='')
+    location = models.CharField(max_length=255)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
@@ -48,7 +54,7 @@ class Recipient(models.Model):
 
 class BloodBank(models.Model):
     name = models.CharField(max_length=40, default='')
-    location = models.CharField(max_length=40, default='')
+    location = models.CharField(max_length=255)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
@@ -57,7 +63,7 @@ class BloodBank(models.Model):
 
 class Hospital(models.Model):
     name = models.CharField(max_length=40, default='')
-    location = models.CharField(max_length=40, default='')
+    location = models.CharField(max_length=255)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
@@ -66,7 +72,7 @@ class Hospital(models.Model):
 
 class LocalBodies(models.Model):
     name = models.CharField(max_length=40, default='')
-    location = models.CharField(max_length=40, default='')
+    location = models.CharField(max_length=255)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
@@ -78,7 +84,11 @@ class BloodDonationEvent(models.Model):
     name = models.CharField(max_length=250)
     organizer = models.CharField(max_length=50)
     date = models.DateTimeField(default=datetime.datetime.now())
-    location = models.CharField(max_length=100)
+    location = models.CharField(max_length=255)
+    '''
+    city = models.CharField(max_length=255)
+    location = PlainLocationField(based_fields=['city'], zoom=7)
+    '''
     description = models.CharField(max_length=500)
     # time=models.TimeField()
     poster = models.FileField(null=True,blank=True)
@@ -105,7 +115,7 @@ class Request(models.Model):
     request_quantity = models.IntegerField()
     request_type = models.CharField(choices=BLOOD_TYPE_CHOICES, default='O+', max_length=20)
     date = models.DateTimeField(default=datetime.datetime.now())
-    location = models.CharField(default="",max_length=100)
+    location = models.CharField(max_length=255)
     #description = models.CharField(default="",max_length=500)
     # time = models.TimeField()
     #poster = models.ImageField(null=True, blank=True)
